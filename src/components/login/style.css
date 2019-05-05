@@ -43,3 +43,7 @@
 	font-weight: bold;
 	font-size: 20px;
 }
+
+.errorsBox {
+	color: red;
+}

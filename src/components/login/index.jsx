@@ -8,13 +8,14 @@ class Login extends Component {
 		super(props);
 		this.state = {
 			login: '',
-			password: ''
+			password: '',
+			error: ''
 		};
 	}
 	_login() {
 		let { login, password } = this.state;
 		if (login !== '' && password !== '') {
-			let user = { ...this.state };
+			let user = { login, password };
 			axios
 				.post('http://localhost:8000/login', user)
 				.then((res) => {
@@ -27,7 +28,21 @@ class Login extends Component {
 						this.props.history.push('/');
 					}
 				})
-				.catch((e) => console.log(e));
+				.catch((e) => {
+					if (e.response && e.response.data && e.response.data.message) {
+						this.setState({
+							error: e.response.data.message
+						});
+					}
+				});
+		} else {
+			!login
+				? this.setState({
+						error: 'Fill the login field'
+					})
+				: this.setState({
+						error: 'Fill the password field'
+					});
 		}
 	}
 
@@ -42,12 +57,16 @@ class Login extends Component {
 	}
 
 	render() {
-		let { login, password } = this.state;
+		let { login, password, error } = this.state;
+
 		return (
 			<div className="login__box">
 				<div>
 					<fieldset className="login__block">
 						<legend>Login</legend>
+						<div className="errorsBox">
+							<p>{error}</p>
+						</div>
 						<div>
 							<p>Login</p>
 							<input
