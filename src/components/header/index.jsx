@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import './style.css';
-
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class Header extends Component {
+	logOut() {
+		if (localStorage.getItem('authToken')) {
+			localStorage.removeItem('authToken');
+			this.props.history.push('/login');
+		}
+	}
 	render() {
 		return (
 			<header className="App_header">
@@ -20,13 +25,13 @@ class Header extends Component {
 					<Link to="/login">
 						<div className="item btn-success">Login</div>
 					</Link>
-					<Link to="/logout">
-						<div className="item btn-danger">Logout</div>
-					</Link>
+					<button className="item btn-danger" onClick={() => this.logOut()}>
+						Logout
+					</button>
 				</div>
 			</header>
 		);
 	}
 }
 
-export default Header;
+export default withRouter(Header);

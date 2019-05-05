@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Boom = require('boom');
 
 const User = require('../models').User;
 
@@ -16,10 +17,10 @@ async function Login(req, res) {
 				};
 				return response;
 			} else {
-				return 'Wrong password';
+				return new Boom('Wrong password', { statusCode: 400 });
 			}
 		} else {
-			return 'Wrong login';
+			return new Boom('Wrong login', { statusCode: 400 });
 		}
 	} catch (err) {
 		return err;

@@ -39,6 +39,11 @@
 	border-color: #e3342f;
 }
 
+button {
+	outline: none;
+	border: none;
+}
+
 .item:hover {
 	opacity: .8;
 }

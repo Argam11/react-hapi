@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './style.css';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import './style.css';
 
 class Login extends Component {
 	constructor(props) {
@@ -13,14 +14,19 @@ class Login extends Component {
 	_login() {
 		let { login, password } = this.state;
 		if (login !== '' && password !== '') {
-			let token =
-				'Bearer ' +
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTY5NzIzMDMsImV4cCI6MTU1NzU3NzEwM30.8JBGuTQOrl_EPLW-tgjDmLwIl3fE7B8RT3JFitvPA_s';
-			let config = { headers: { Authorization: token } };
 			let user = { ...this.state };
 			axios
-				.post('http://localhost:8000/login', user, config)
-				.then((a) => console.log(a))
+				.post('http://localhost:8000/login', user)
+				.then((res) => {
+					localStorage.setItem('authToken', res.data.token);
+
+					if (this.props.location.state) {
+						let { pathname } = this.props.location.state.from;
+						this.props.history.push(pathname);
+					} else {
+						this.props.history.push('/');
+					}
+				})
 				.catch((e) => console.log(e));
 		}
 	}
@@ -70,4 +76,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default withRouter(Login);
