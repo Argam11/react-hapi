@@ -2,6 +2,8 @@ import Hapi from 'hapi';
 const Boom = require('boom');
 
 import AuthRoute from './routes/Auth.jsx';
+import Companies from './routes/companies.jsx';
+
 const configJWT = require('./config/jwt');
 
 require('dotenv').config({
@@ -43,7 +45,8 @@ const init = async () => {
 				return 'Home page!';
 			}
 		},
-		AuthRoute
+		AuthRoute,
+		...Companies
 	]);
 	await server.start();
 	return server;

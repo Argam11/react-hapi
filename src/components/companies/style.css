@@ -1,1 +1,131 @@
+.companies__header {
+	padding: 10px 20px;
+	box-sizing: border-box;
+	background-color: burlywood;
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	border-radius: 5px;
+	margin-top: 20px;
+}
 
+.companies__content {
+	margin-top: 20px;
+	padding: 20px 10px;
+	box-sizing: border-box;
+	background-color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.companies__contentRow {
+	padding: 10px;
+	box-sizing: border-box;
+	background-color: #c8d2d6;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.companies__contentRow:not(:first-child) {
+	margin-top: 20px;
+}
+
+.companies__headerItem {
+	width: 14%;
+}
+
+.companies__item {
+	width: 14%;
+}
+
+.companies__createButton {
+	display: flex;
+}
+
+.companies__createButton > div {
+	padding: 10px 20px;
+	box-sizing: border-box;
+	background-color: #3490dc;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.companies__itemEdit {
+	padding: 0 10px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.companies__itemEdit > div {
+	padding: 10px 0;
+	box-sizing: border-box;
+	background-color: #3490dc;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.companies__itemDelete {
+	padding: 0 10px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.companies__itemDelete > div {
+	padding: 10px 0;
+	box-sizing: border-box;
+	background-color: #e3342f;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+/* CREATE COMPANY */
+.createCompanies__block {
+	margin-top: 20px;
+	padding: 20px 5px 10px;
+	box-sizing: border-box;
+	border: 2px solid #888;
+	border-radius: 5px;
+}
+
+.createCompanies__item {
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.createCompanies__item > p {
+	margin: 3px 0;
+}
+
+.createCompanies__item > input {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 8px;
+	outline: none;
+	border: 1px solid #aaa;
+}
+
+.createCompanies__send {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
+.createCompanies__send > div {
+	padding: 10px;
+	box-sizing: border-box;
+	background-color: #3490dc;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #ffffff;
+	cursor: pointer;
+}

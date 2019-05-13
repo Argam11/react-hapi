@@ -14,7 +14,7 @@ class Login extends Component {
 	}
 	_login() {
 		let { login, password } = this.state;
-		if (login !== '' && password !== '') {
+		if (login && password) {
 			let user = { login, password };
 			axios
 				.post('http://localhost:8000/login', user)

@@ -7,6 +7,8 @@ import Header from '../header';
 import Home from '../home';
 import Login from '../login';
 import Companies from '../companies';
+import CreateCompany from '../companies/create';
+import EditCompany from '../companies/index';
 import Employees from '../employees';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -37,6 +39,8 @@ class Routes extends Component {
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
 					<PrivateRoute path="/companies" component={Companies} />
+					<PrivateRoute path="/createCompany" component={CreateCompany} />
+					<PrivateRoute path="/editCompany" component={EditCompany} />
 					<PrivateRoute path="/employees" component={Employees} />
 				</div>
 			</Router>
