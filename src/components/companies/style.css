@@ -33,12 +33,15 @@
 	margin-top: 20px;
 }
 
-.companies__headerItem {
+.companies__headerItem:not(:first-child) {
 	width: 14%;
 }
 
-.companies__item {
+.companies__item:not(:first-child) {
 	width: 14%;
+	word-wrap: break-word;
+	padding: 0 5px;
+	box-sizing: border-box;
 }
 
 .companies__createButton {
@@ -128,4 +131,39 @@
 	font-weight: bold;
 	color: #ffffff;
 	cursor: pointer;
+}
+
+.createCompanies__imgBox {
+	width: 80px;
+	height: 80px;
+	border: solid #888;
+	margin-top: 10px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.companyLogo_img {
+	width: 100%;
+	height: 100%;
+}
+
+.createCompanies__item label {
+	display: inline;
+}
+
+.image_path {
+	margin-top: 10px;
+}
+
+.upload_img {
+	width: 50%;
+	height: 50%;
+}
+
+.companies__logoBox > img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
 }

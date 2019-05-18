@@ -28,10 +28,10 @@ class Login extends Component {
 						this.props.history.push('/');
 					}
 				})
-				.catch((e) => {
-					if (e.response && e.response.data && e.response.data.message) {
+				.catch((err) => {
+					if (err.response && err.response.data && err.response.data.message) {
 						this.setState({
-							error: e.response.data.message
+							error: err.response.data.message
 						});
 					}
 				});

@@ -1,4 +1,6 @@
 import Hapi from 'hapi';
+import Inert from 'inert';
+
 const Boom = require('boom');
 
 import AuthRoute from './routes/Auth.jsx';
@@ -12,6 +14,7 @@ require('dotenv').config({
 
 const init = async () => {
 	const server = new Hapi.Server({
+		port: 8000,
 		port: 8000,
 		host: 'localhost',
 		routes: {
@@ -32,7 +35,7 @@ const init = async () => {
 	});
 
 	// jwt
-	await server.register(require('hapi-auth-jwt2'));
+	await server.register([ require('hapi-auth-jwt2'), Inert ]);
 	server.auth.strategy('jwt', 'jwt', configJWT);
 	server.auth.default('jwt');
 

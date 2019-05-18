@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import axios from 'axios';
 
-class Create extends Component {
+class Edit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,13 +18,24 @@ class Create extends Component {
 				Authorization: 'Bearer ' + localStorage.getItem('authToken')
 			}
 		};
+		this.companyId = this.props && this.props.match && this.props.match.params && this.props.match.params.companyId;
 	}
 
-	_handleChange(e) {
-		let { name, value } = e.target;
-		this.setState({
-			[name]: value
-		});
+	componentDidMount() {
+		axios
+			.get(`http://localhost:8000/companies/${this.companyId}`, this.config)
+			.then((res) => {
+				let { name, email, logo, website } = res.data;
+				this.setState({
+					name,
+					email,
+					logo,
+					website
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}
 
 	_handleFile(e) {
@@ -34,6 +45,13 @@ class Create extends Component {
 		this.setState({
 			logo: file.name,
 			file: formData
+		});
+	}
+
+	handleChange(e) {
+		let { name, value } = e.target;
+		this.setState({
+			[name]: value
 		});
 	}
 
@@ -47,9 +65,8 @@ class Create extends Component {
 				let logo = res.data;
 				if (name && email && logo && website) {
 					let company = { name, email, logo, website };
-
 					axios
-						.post('http://localhost:8000/createCompany', company, this.config)
+						.put(`http://localhost:8000/companies/${this.companyId}`, company, this.config)
 						.then(() => {
 							this.props.history.push('/companies');
 						})
@@ -80,8 +97,7 @@ class Create extends Component {
 	}
 
 	render() {
-		let { name, email, website, logo, error } = this.state;
-
+		let { name, email, logo, website, error } = this.state;
 		return (
 			<div className="companies__box">
 				<h1>Companies page!</h1>
@@ -95,11 +111,11 @@ class Create extends Component {
 						</div>
 						<div className="createCompanies__item">
 							<p>Name:</p>
-							<input type="text" name="name" value={name} onChange={(e) => this._handleChange(e)} />
+							<input type="text" name="name" value={name} onChange={(e) => this.handleChange(e)} />
 						</div>
 						<div className="createCompanies__item">
 							<p>Email:</p>
-							<input type="text" name="email" value={email} onChange={(e) => this._handleChange(e)} />
+							<input type="text" name="email" value={email} onChange={(e) => this.handleChange(e)} />
 						</div>
 						<div className="createCompanies__item">
 							<p>Logo:</p>
@@ -121,10 +137,10 @@ class Create extends Component {
 						</div>
 						<div className="createCompanies__item">
 							<p>Website:</p>
-							<input type="text" name="website" value={website} onChange={(e) => this._handleChange(e)} />
+							<input type="text" name="website" value={website} onChange={(e) => this.handleChange(e)} />
 						</div>
 						<div className="createCompanies__item createCompanies__send">
-							<div onClick={() => this._handleClick()}>Create company</div>
+							<div onClick={() => this._handleClick()}>Edit company</div>
 						</div>
 					</div>
 				</div>
@@ -133,4 +149,4 @@ class Create extends Component {
 	}
 }
 
-export default Create;
+export default Edit;
