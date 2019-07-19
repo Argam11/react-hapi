@@ -6,6 +6,7 @@
 .pnp.js
 /.env
 /public/storage/*
+/public/storage/.gitkeep 
 
 #server
 /server/node_modules
