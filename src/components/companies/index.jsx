@@ -33,6 +33,7 @@ class Companies extends Component {
 
 	async deleteCompany(id) {
 		const { data } = this.state;
+
 		try {
 			const res = await api.deleteOneCompany(id);
 

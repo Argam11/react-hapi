@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './style.css';
 import * as api from 'api';
-import axios from 'axios';
 
 import CompaniesForm from './general-components/form';
 

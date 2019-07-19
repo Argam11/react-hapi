@@ -16,10 +16,11 @@ class Companies {
 	}
 	async upload(req, res) {
 		try {
-			let filePath = req.payload['file'].hapi.filename;
-			req.payload['file'].pipe(fs.createWriteStream(path.join(__dirname + '/../../public/images/' + filePath)));
+			const newPath = String(new Date().getTime()) + '.jpg';
+			// let filePath = req.payload['file'].hapi.filename;
+			req.payload['file'].pipe(fs.createWriteStream(path.join(__dirname + '/../../public/images/' + newPath)));
 
-			return { logo: filePath };
+			return { logo: newPath };
 		} catch (err) {
 			return err;
 		}
@@ -51,6 +52,19 @@ class Companies {
 		let { name, email, logo, website } = req.payload;
 		let { id } = req.params;
 		try {
+			let company = await companies.findOne({
+				where: {
+					id
+				},
+				raw: true
+			});
+			var stats = fs.existsSync(__dirname + '/../../public/images/' + company.logo);
+
+			if (stats) {
+				fs.unlinkSync(path.join(__dirname + '/../../public/images/' + company.logo));
+				//file removed
+			}
+
 			await companies.update(
 				{
 					name,
@@ -73,15 +87,27 @@ class Companies {
 	async delete(req, res) {
 		let { id } = req.params;
 		try {
+			let company = await companies.findOne({
+				where: {
+					id
+				},
+				raw: true
+			});
+			var stats = fs.existsSync(__dirname + '/../../public/images/' + company.logo);
+
+			if (stats) {
+				fs.unlinkSync(path.join(__dirname + '/../../public/images/' + company.logo));
+				//file removed
+			}
+
 			await companies.destroy({
 				where: {
 					id
 				}
 			});
-
 			return 'success';
 		} catch (err) {
-			return err;
+			console.error(err);
 		}
 	}
 }
