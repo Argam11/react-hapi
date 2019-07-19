@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './style.css';
+import * as api from 'api';
 import axios from 'axios';
 
 import CompaniesForm from './general-components/form';
@@ -12,9 +13,9 @@ class Edit extends Component {
 				name: '',
 				email: '',
 				logo: '',
-				file: {},
 				website: ''
 			},
+			file: {},
 			error: ''
 		};
 		this.config = {
@@ -25,17 +26,16 @@ class Edit extends Component {
 		this.companyId = this.props && this.props.match && this.props.match.params && this.props.match.params.companyId;
 	}
 
-	componentDidMount() {
-		axios.get(`http://localhost:8000/companies/${this.companyId}`, this.config).then((res) => {
-			let { name, email, logo, website } = res.data;
-			this.setState({
-				company: {
-					name,
-					email,
-					logo,
-					website
-				}
-			});
+	async componentDidMount() {
+		const { data } = (await api.getOneCompany(this.companyId)) || {};
+		const { name, email, logo, website } = data || {};
+		this.setState({
+			company: {
+				name,
+				email,
+				logo,
+				website
+			}
 		});
 	}
 
@@ -62,40 +62,47 @@ class Edit extends Component {
 		});
 	}
 
-	handleClick() {
+	async handleClick() {
 		let { company, file } = this.state;
 		let { name, email, website } = company;
 
-		axios
-			.post(`http://localhost:8000/upload`, file, this.config)
-			.then((res) => {
-				let logo = res.data;
-				if (name && email && logo && website) {
-					axios
-						.put(`http://localhost:8000/companies/${this.companyId}`, company, this.config)
-						.then(() => {
+		if (name && email && website) {
+			try {
+				const { data } = (await api.uploadCompanyLogo(file)) || {};
+				const { logo } = data || {};
+				this.setState(
+					{
+						company: {
+							...this.state.company,
+							logo
+						}
+					},
+					async () => {
+						try {
+							const { company } = this.state;
+							await api.editCompany(this.companyId, company);
 							this.props.history.push('/companies');
-						})
-						.catch((err) => {
-							if (err.response && err.response.data && err.response.data.message) {
+						} catch (error) {
+							if (error.response && error.response.data && error.response.data.message) {
 								this.setState({
-									error: err.response.data.message
+									error: error.response.data.message
 								});
 							}
-						});
-				} else {
-					this.setState({
-						error: !name
-							? 'Fill the name field'
-							: !email ? 'Fill the email field' : !logo ? 'Fill the logo field' : 'Fill the website field'
-					});
-				}
-			})
-			.catch((err) => {
+						}
+					}
+				);
+			} catch (error) {
 				this.setState({
-					error: 'Fill the logo field'
+					error: error.message
 				});
+			}
+		} else {
+			this.setState({
+				error: !name
+					? 'Fill the name field'
+					: !email ? 'Fill the email field' : !file ? 'Fill the logo field' : 'Fill the website field'
 			});
+		}
 	}
 
 	back() {

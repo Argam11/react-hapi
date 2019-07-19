@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 export default function Form({ company, error, back, handleChange, handleFile, handleClick }) {
 	const { name, email, logo, website } = company || {};

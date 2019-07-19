@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as api from '../../api';
+import * as api from 'api';
 import './style.css';
 
 import CompaniesForm from './general-components/form';
@@ -45,7 +45,7 @@ class Create extends Component {
 	async handleClick() {
 		const { company, file } = this.state;
 		const { name, email, website } = company;
-		if (name && email && file && website) {
+		if (name && email && website) {
 			try {
 				const { data } = (await api.uploadCompanyLogo(file)) || {};
 				const { logo } = data || {};
@@ -71,11 +71,9 @@ class Create extends Component {
 					}
 				);
 			} catch (error) {
-				console.log(error.message);
-
-				// this.setState({
-				// 	error
-				// });
+				this.setState({
+					error: error.message
+				});
 			}
 		} else {
 			this.setState({

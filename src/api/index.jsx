@@ -12,12 +12,20 @@ export function getAllCompanies() {
 	return axios.get(`${apiUrl}/companies`, config);
 }
 
+export function getOneCompany(id) {
+	return axios.get(`${apiUrl}/companies/${id}`, config);
+}
+
 export function createCompany(data) {
 	return axios.post(`${apiUrl}/createCompany`, data, config);
 }
 
 export function uploadCompanyLogo(file) {
 	return axios.post(`${apiUrl}/upload`, file, config);
+}
+
+export function editCompany(id, data) {
+	return axios.put(`${apiUrl}/companies/${id}`, data, config);
 }
 
 export function deleteOneCompany(id) {

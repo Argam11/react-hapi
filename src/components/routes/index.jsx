@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './style.css';
 
-import Header from '../header';
+import Header from 'components/header';
 
-import Home from '../home';
-import Login from '../login';
-import Companies from '../companies';
-import CreateCompany from '../companies/create';
-import EditCompany from '../companies/edit';
-import Employees from '../employees';
+import Home from 'components/home';
+import Login from 'components/login';
+import Companies from 'components/companies';
+import CreateCompany from 'components/companies/create';
+import EditCompany from 'components/companies/edit';
+import Employees from 'components/employees';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 	return (
