@@ -6,7 +6,6 @@
 .pnp.js
 /.env
 /public/storage/*
-!/public/storage
 
 #server
 /server/node_modules
