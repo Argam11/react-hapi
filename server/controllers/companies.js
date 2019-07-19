@@ -18,7 +18,7 @@ class Companies {
 		try {
 			const newPath = String(new Date().getTime()) + '.jpg';
 			// let filePath = req.payload['file'].hapi.filename;
-			req.payload['file'].pipe(fs.createWriteStream(path.join(__dirname + '/../../public/images/' + newPath)));
+			req.payload['file'].pipe(fs.createWriteStream(path.join(__dirname + '/../../public/storage/' + newPath)));
 
 			return { logo: newPath };
 		} catch (err) {
@@ -58,10 +58,10 @@ class Companies {
 				},
 				raw: true
 			});
-			var stats = fs.existsSync(__dirname + '/../../public/images/' + company.logo);
+			var stats = fs.existsSync(__dirname + '/../../public/storage/' + company.logo);
 
 			if (stats) {
-				fs.unlinkSync(path.join(__dirname + '/../../public/images/' + company.logo));
+				fs.unlinkSync(path.join(__dirname + '/../../public/storage/' + company.logo));
 				//file removed
 			}
 
@@ -93,10 +93,10 @@ class Companies {
 				},
 				raw: true
 			});
-			var stats = fs.existsSync(__dirname + '/../../public/images/' + company.logo);
+			var stats = fs.existsSync(__dirname + '/../../public/storage/' + company.logo);
 
 			if (stats) {
-				fs.unlinkSync(path.join(__dirname + '/../../public/images/' + company.logo));
+				fs.unlinkSync(path.join(__dirname + '/../../public/storage/' + company.logo));
 				//file removed
 			}
 

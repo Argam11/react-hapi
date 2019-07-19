@@ -8,7 +8,7 @@ export default function List({ company, editCompany, deleteCompany }) {
 			<div className="companies__item">{company.name}</div>
 			<div className="companies__item">{company.email}</div>
 			<div className="companies__item companies__logoBox">
-				<img src={`/images/${company.logo}`} alt="company logo" />
+				<img src={`/storage/${company.logo}`} alt="company logo" />
 			</div>
 			<div className="companies__item">{company.website}</div>
 			<div className="companies__item companies__itemEdit">
