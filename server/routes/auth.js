@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const auth = require('../controllers/auth.jsx');
+const auth = require('../controllers/auth');
 
 module.exports = {
 	method: 'POST',

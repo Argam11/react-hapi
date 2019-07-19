@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import './style.css';
 import axios from 'axios';
 
+import CompaniesForm from './general-components/form';
+
 class Edit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: '',
-			email: '',
-			logo: '',
-			file: {},
-			website: '',
+			company: {
+				name: '',
+				email: '',
+				logo: '',
+				file: {},
+				website: ''
+			},
 			error: ''
 		};
 		this.config = {
@@ -22,28 +26,28 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		axios
-			.get(`http://localhost:8000/companies/${this.companyId}`, this.config)
-			.then((res) => {
-				let { name, email, logo, website } = res.data;
-				this.setState({
+		axios.get(`http://localhost:8000/companies/${this.companyId}`, this.config).then((res) => {
+			let { name, email, logo, website } = res.data;
+			this.setState({
+				company: {
 					name,
 					email,
 					logo,
 					website
-				});
-			})
-			.catch((err) => {
-				console.log(err);
+				}
 			});
+		});
 	}
 
-	_handleFile(e) {
+	handleFile(e) {
 		let file = e.target.files[0];
 		var formData = new FormData();
 		formData.append('file', file);
 		this.setState({
-			logo: file.name,
+			company: {
+				...this.state.company,
+				logo: file.name
+			},
 			file: formData
 		});
 	}
@@ -51,20 +55,22 @@ class Edit extends Component {
 	handleChange(e) {
 		let { name, value } = e.target;
 		this.setState({
-			[name]: value
+			company: {
+				...this.state.company,
+				[name]: value
+			}
 		});
 	}
 
-	_handleClick() {
-		let { file } = this.state;
+	handleClick() {
+		let { company, file } = this.state;
+		let { name, email, website } = company;
 
 		axios
 			.post(`http://localhost:8000/upload`, file, this.config)
 			.then((res) => {
-				let { name, email, website } = this.state;
 				let logo = res.data;
 				if (name && email && logo && website) {
-					let company = { name, email, logo, website };
 					axios
 						.put(`http://localhost:8000/companies/${this.companyId}`, company, this.config)
 						.then(() => {
@@ -92,58 +98,23 @@ class Edit extends Component {
 			});
 	}
 
-	_back() {
+	back() {
 		this.props.history.push('/companies');
 	}
 
 	render() {
-		let { name, email, logo, website, error } = this.state;
+		let { company, error } = this.state;
+
 		return (
 			<div className="companies__box">
-				<h1>Companies page!</h1>
-				<div className="companies__createButton">
-					<div onClick={() => this._back()}>Back</div>
-				</div>
-				<div className="createCompanies__content">
-					<div className="createCompanies__block">
-						<div className="errorsBox">
-							<p>{error}</p>
-						</div>
-						<div className="createCompanies__item">
-							<p>Name:</p>
-							<input type="text" name="name" value={name} onChange={(e) => this.handleChange(e)} />
-						</div>
-						<div className="createCompanies__item">
-							<p>Email:</p>
-							<input type="text" name="email" value={email} onChange={(e) => this.handleChange(e)} />
-						</div>
-						<div className="createCompanies__item">
-							<p>Logo:</p>
-							<label>
-								<input
-									type="file"
-									hidden
-									accept="image/png, image/jpeg"
-									name="logo"
-									onChange={(e) => this._handleFile(e)}
-								/>
-								<div className="createCompanies__imgBox">
-									<img src="/images/upload.png" className="upload_img" alt="upload" />
-								</div>
-							</label>
-							<div>
-								<p className="image_path">{logo && logo}</p>
-							</div>
-						</div>
-						<div className="createCompanies__item">
-							<p>Website:</p>
-							<input type="text" name="website" value={website} onChange={(e) => this.handleChange(e)} />
-						</div>
-						<div className="createCompanies__item createCompanies__send">
-							<div onClick={() => this._handleClick()}>Edit company</div>
-						</div>
-					</div>
-				</div>
+				<CompaniesForm
+					company={company}
+					error={error}
+					back={() => this.back()}
+					handleChange={(e) => this.handleChange(e)}
+					handleFile={(e) => this.handleFile(e)}
+					handleClick={() => this.handleClick()}
+				/>
 			</div>
 		);
 	}

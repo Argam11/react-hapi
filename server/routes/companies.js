@@ -1,8 +1,5 @@
 const Joi = require('joi');
-const fs = require('fs');
-const path = require('path');
-
-const companies = require('../controllers/companies.jsx');
+const companies = require('../controllers/companies');
 
 module.exports = [
 	{
@@ -33,13 +30,8 @@ module.exports = [
 				maxBytes: 2 * 1000 * 1000
 			}
 		},
-		handler: (request, h) => {
-			let filePath = request.payload['file'].hapi.filename;
-
-			request.payload['file'].pipe(
-				fs.createWriteStream(path.join(__dirname + '/../../public/images/' + filePath))
-			);
-			return filePath;
+		handler: async function(request, h) {
+			return companies.upload(request, h);
 		}
 	},
 	{

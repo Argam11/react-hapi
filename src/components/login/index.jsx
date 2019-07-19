@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+import * as api from '../../api';
 import './style.css';
 
 class Login extends Component {
@@ -12,29 +12,29 @@ class Login extends Component {
 			error: ''
 		};
 	}
-	_login() {
+	async _login() {
 		let { login, password } = this.state;
 		if (login && password) {
 			let user = { login, password };
-			axios
-				.post('http://localhost:8000/login', user)
-				.then((res) => {
-					localStorage.setItem('authToken', res.data.token);
-
-					if (this.props.location.state) {
-						let { pathname } = this.props.location.state.from;
+			try {
+				const { data } = (await api.login(user)) || {};
+				if (data) {
+					localStorage.setItem('authToken', data.token);
+					const { location } = this.props;
+					if (location && location.state) {
+						let { pathname } = location.state.from || {};
 						this.props.history.push(pathname);
 					} else {
 						this.props.history.push('/');
 					}
-				})
-				.catch((err) => {
-					if (err.response && err.response.data && err.response.data.message) {
-						this.setState({
-							error: err.response.data.message
-						});
-					}
-				});
+				}
+			} catch (error) {
+				if (error.response && error.response.data && error.response.data.message) {
+					this.setState({
+						error: error.response.data.message
+					});
+				}
+			}
 		} else {
 			!login
 				? this.setState({

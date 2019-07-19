@@ -44,11 +44,13 @@
 	box-sizing: border-box;
 }
 
-.companies__createButton {
+.companies__createButton,
+.companies__backButton {
 	display: flex;
 }
 
-.companies__createButton > div {
+.companies__createButton > div,
+.companies__backButton > div {
 	padding: 10px 20px;
 	box-sizing: border-box;
 	background-color: #3490dc;

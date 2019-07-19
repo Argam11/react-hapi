@@ -1,4 +1,6 @@
 const Boom = require('boom');
+const fs = require('fs');
+const path = require('path');
 const companies = require('../models').companies;
 
 class Companies {
@@ -8,6 +10,16 @@ class Companies {
 			await companies.create({ name, email, logo, website });
 
 			return 'success';
+		} catch (err) {
+			return err;
+		}
+	}
+	async upload(req, res) {
+		try {
+			let filePath = req.payload['file'].hapi.filename;
+			req.payload['file'].pipe(fs.createWriteStream(path.join(__dirname + '/../../public/images/' + filePath)));
+
+			return { logo: filePath };
 		} catch (err) {
 			return err;
 		}

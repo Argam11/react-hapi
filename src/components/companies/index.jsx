@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import * as api from '../../api';
 import './style.css';
-import axios from 'axios';
+
+import CompaniesList from './general-components/list.jsx';
 
 class Companies extends Component {
 	constructor(props) {
@@ -8,56 +10,49 @@ class Companies extends Component {
 		this.state = {
 			data: []
 		};
-		this.config = {
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('authToken')
-			}
-		};
 	}
 
-	componentDidMount() {
-		axios
-			.get('http://localhost:8000/companies', this.config)
-			.then((res) => {
-				this.setState({
-					data: res.data
-				});
-			})
-			.catch((err) => {
-				console.log(err);
+	async componentDidMount() {
+		try {
+			const { data } = await api.getAllCompanies();
+			this.setState({
+				data
 			});
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
-	_createCompany() {
+	createCompany() {
 		this.props.history.push('/createCompany');
 	}
 
-	_editCompany(id) {
+	editCompany(id) {
 		this.props.history.push(`/editCompany/${id}`);
 	}
 
-	_deleteCompany(id) {
-		let { data } = this.state;
+	async deleteCompany(id) {
+		const { data } = this.state;
+		try {
+			const res = await api.deleteOneCompany(id);
 
-		axios
-			.delete(`http://localhost:8000/companies/${id}`, this.config)
-			.then((res) => {
+			if (res.data === 'success') {
 				let newData = data.filter((item) => item.id !== id);
 				this.setState({ data: newData });
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render() {
-		let { data } = this.state;
+		const { data } = this.state;
 
 		return (
 			<div className="companies__box">
 				<h1>Companies page!</h1>
 				<div className="companies__createButton">
-					<div onClick={() => this._createCompany()}>Create</div>
+					<div onClick={() => this.createCompany()}>Create</div>
 				</div>
 				<div className="companies__header">
 					<div className="companies__headerItem">ID</div>
@@ -70,23 +65,14 @@ class Companies extends Component {
 				</div>
 				<div className="companies__content">
 					{data &&
-						data.map((company, index) => {
+						data.map((company) => {
 							return (
-								<div className="companies__contentRow" key={index}>
-									<div className="companies__item">{company.id}</div>
-									<div className="companies__item">{company.name}</div>
-									<div className="companies__item">{company.email}</div>
-									<div className="companies__item companies__logoBox">
-										<img src={`/images/${company.logo}`} alt="company logo" />
-									</div>
-									<div className="companies__item">{company.website}</div>
-									<div className="companies__item companies__itemEdit">
-										<div onClick={() => this._editCompany(company.id)}>Edit</div>
-									</div>
-									<div className="companies__item companies__itemDelete">
-										<div onClick={() => this._deleteCompany(company.id)}>Delete</div>
-									</div>
-								</div>
+								<CompaniesList
+									key={company.id}
+									company={company}
+									editCompany={(id) => this.editCompany(id)}
+									deleteCompany={(id) => this.deleteCompany(id)}
+								/>
 							);
 						})}
 				</div>
