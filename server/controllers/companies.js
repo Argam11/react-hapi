@@ -105,6 +105,7 @@ class Companies {
 					id
 				}
 			});
+
 			return 'success';
 		} catch (err) {
 			console.error(err);

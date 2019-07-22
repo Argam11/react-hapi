@@ -5,27 +5,13 @@ const Boom = require('boom');
 
 const AuthRoute = require('./routes/Auth');
 const Companies = require('./routes/companies');
+const Employees = require('./routes/employees');
 
 const configJWT = require('./config/jwt');
 
 require('dotenv').config({
 	path: __dirname + '/.env'
 });
-
-//////////////////////////
-const company_employees = require('./models').company_employees;
-const companies = require('./models').companies;
-
-companies
-	.findAll({
-		where: {
-			id: 14
-		},
-		raw: true
-	})
-	.then((e) => {
-		// console.log(e);
-	});
 
 const init = async () => {
 	const server = new Hapi.Server({
@@ -63,7 +49,8 @@ const init = async () => {
 			}
 		},
 		AuthRoute,
-		...Companies
+		...Companies,
+		...Employees
 	]);
 	await server.start();
 	return server;

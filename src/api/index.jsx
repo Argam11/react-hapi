@@ -8,6 +8,7 @@ export function login(data) {
 }
 
 // PTIVATE API
+// COMPANIES
 export function getAllCompanies() {
 	return axios.get(`${apiUrl}/companies`, config);
 }
@@ -30,4 +31,9 @@ export function editCompany(id, data) {
 
 export function deleteOneCompany(id) {
 	return axios.delete(`${apiUrl}/companies/${id}`, config);
+}
+
+// EMPLOYEES
+export function getAllEmployees() {
+	return axios.get(`${apiUrl}/employees`, config);
 }

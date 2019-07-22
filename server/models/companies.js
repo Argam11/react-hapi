@@ -12,10 +12,9 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	companies.associate = function(models) {
 		// associations can be defined here
-		// models.companies.hasMany(models.company_employees, {
-		// 	foreignKey: 'companyId'
-		// });
-		companies.hasOne(models.company_employees);
+		models.companies.hasMany(models.employees, {
+			foreignKey: 'companyId'
+		});
 	};
 	return companies;
 };

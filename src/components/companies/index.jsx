@@ -5,12 +5,9 @@ import './style.css';
 import CompaniesList from './general-components/list';
 
 class Companies extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: []
-		};
-	}
+	state = {
+		data: []
+	};
 
 	async componentDidMount() {
 		try {
