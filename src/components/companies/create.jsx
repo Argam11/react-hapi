@@ -5,19 +5,16 @@ import './style.css';
 import CompaniesForm from './general-components/form';
 
 class Create extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			company: {
-				name: '',
-				email: '',
-				logo: '',
-				website: ''
-			},
-			file: {},
-			error: ''
-		};
-	}
+	state = {
+		company: {
+			name: '',
+			email: '',
+			logo: '',
+			website: ''
+		},
+		file: {},
+		error: ''
+	};
 
 	handleChange(e) {
 		const { name, value } = e.target;

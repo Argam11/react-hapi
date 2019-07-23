@@ -5,25 +5,22 @@ import * as api from 'api';
 import CompaniesForm from './general-components/form';
 
 class Edit extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			company: {
-				name: '',
-				email: '',
-				logo: '',
-				website: ''
-			},
-			file: {},
-			error: ''
-		};
-		this.config = {
-			headers: {
-				Authorization: 'Bearer ' + localStorage.getItem('authToken')
-			}
-		};
-		this.companyId = this.props && this.props.match && this.props.match.params && this.props.match.params.companyId;
-	}
+	state = {
+		company: {
+			name: '',
+			email: '',
+			logo: '',
+			website: ''
+		},
+		file: {},
+		error: ''
+	};
+	config = {
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('authToken')
+		}
+	};
+	companyId = this.props && this.props.match && this.props.match.params && this.props.match.params.id;
 
 	async componentDidMount() {
 		const { data } = (await api.getOneCompany(this.companyId)) || {};

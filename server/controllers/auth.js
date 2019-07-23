@@ -13,7 +13,7 @@ async function Login(req, res) {
 		if (user) {
 			let match = bcrypt.compareSync(password, user.password);
 			if (match) {
-				const token = jwt.sign({ user }, secret, { expiresIn: '1h' });
+				const token = jwt.sign({ user }, secret, { expiresIn: '7d' });
 
 				const response = {
 					token

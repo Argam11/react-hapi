@@ -21,42 +21,36 @@ class Employees extends Component {
 	}
 
 	createEmployee() {
-		console.log(11);
-
-		// this.props.history.push('/createEmployee');
+		this.props.history.push('/createEmployee');
 	}
 
 	editEmployee(id) {
-		console.log(id);
-		// this.props.history.push(`/editEmployee/${id}`);
+		this.props.history.push(`/editEmployee/${id}`);
 	}
 
 	async deleteEmployee(id) {
-		console.log(id);
+		const { data } = this.state;
 
-		// const { data } = this.state;
+		try {
+			const res = await api.deleteEmployee(id);
 
-		// try {
-		// 	const res = await api.deleteOneCompany(id);
-
-		// 	if (res.data === 'success') {
-		// 		let newData = data.filter((item) => item.id !== id);
-		// 		this.setState({ data: newData });
-		// 	}
-		// } catch (error) {
-		// 	console.log(error);
-		// }
+			if (res.data === 'success') {
+				let newData = data.filter((item) => item.id !== id);
+				this.setState({ data: newData });
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render() {
 		const { data } = this.state;
-		console.log(data);
 
 		return (
 			<div className="employees__box">
 				<h1>Employees page!</h1>
 				<div className="employees__createButton">
-					<div onClick={() => this.createCompany()}>Create</div>
+					<div onClick={() => this.createEmployee()}>Create</div>
 				</div>
 				<div className="employees__header">
 					<div className="employees__headerItem">ID</div>

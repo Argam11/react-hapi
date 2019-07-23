@@ -93,7 +93,7 @@
 }
 
 /* CREATE COMPANY */
-.createemployees__block {
+.createEmployees__block {
 	margin-top: 20px;
 	padding: 20px 5px 10px;
 	box-sizing: border-box;
@@ -101,16 +101,17 @@
 	border-radius: 5px;
 }
 
-.createemployees__item {
+.createEmployees__item {
 	padding: 5px;
 	box-sizing: border-box;
 }
 
-.createemployees__item > p {
+.createEmployees__item > p {
 	margin: 3px 0;
 }
 
-.createemployees__item > input {
+.createEmployees__item > input,
+.createEmployees__item > select {
 	width: 100%;
 	padding: 10px;
 	box-sizing: border-box;
@@ -119,13 +120,13 @@
 	border: 1px solid #aaa;
 }
 
-.createemployees__send {
+.createEmployees__send {
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 10px;
 }
 
-.createemployees__send > div {
+.createEmployees__send > div {
 	padding: 10px;
 	box-sizing: border-box;
 	background-color: #3490dc;
@@ -135,7 +136,7 @@
 	cursor: pointer;
 }
 
-.createemployees__imgBox {
+.createEmployees__imgBox {
 	width: 80px;
 	height: 80px;
 	border: solid #888;
@@ -151,7 +152,7 @@
 	height: 100%;
 }
 
-.createemployees__item label {
+.createEmployees__item label {
 	display: inline;
 }
 

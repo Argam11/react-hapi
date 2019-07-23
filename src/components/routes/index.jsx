@@ -10,6 +10,8 @@ import Companies from 'components/companies';
 import CreateCompany from 'components/companies/create';
 import EditCompany from 'components/companies/edit';
 import Employees from 'components/employees';
+import CreateEmployee from 'components/employees/create';
+import EditEmployee from 'components/employees/edit';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 	return (
@@ -40,8 +42,10 @@ class Routes extends Component {
 					<Route path="/login" component={Login} />
 					<PrivateRoute path="/companies" component={Companies} />
 					<PrivateRoute path="/createCompany" component={CreateCompany} />
-					<PrivateRoute path="/editCompany/:companyId" component={EditCompany} />
+					<PrivateRoute path="/editCompany/:id" component={EditCompany} />
 					<PrivateRoute path="/employees" component={Employees} />
+					<PrivateRoute path="/createEmployee" component={CreateEmployee} />
+					<PrivateRoute path="/editEmployee/:id" component={EditEmployee} />
 				</div>
 			</Router>
 		);

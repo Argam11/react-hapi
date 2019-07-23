@@ -1,52 +1,58 @@
 import React from 'react';
 
-export default function Form({ company, error, back, handleChange, handleFile, handleClick }) {
-	const { name, email, logo, website } = company || {};
+export default function Form({ employee, companies, error, back, handleChange, handleClick }) {
+	const { firstName, lastName, companyId, email, phone } = employee || {};
 
 	return (
-		<div className="companies__form">
-			<h1>Companies page!</h1>
-			<div className="companies__backButton">
+		<div className="employees__form">
+			<h1>Employees page!</h1>
+			<div className="employees__backButton">
 				<div onClick={back}>Back</div>
 			</div>
-			<div className="createCompanies__content">
-				<div className="createCompanies__block">
+			<div className="createEmployees__content">
+				<div className="createemployees__block">
 					<div className="errorsBox">
 						<p>{error}</p>
 					</div>
-					<div className="createCompanies__item">
-						<p>Name:</p>
-						<input type="text" name="name" value={name} onChange={(e) => handleChange(e)} />
+					<div className="createEmployees__item">
+						<p>First Name:</p>
+						<input type="text" name="firstName" value={firstName} onChange={(e) => handleChange(e)} />
 					</div>
-					<div className="createCompanies__item">
+					<div className="createEmployees__item">
+						<p>Last Name:</p>
+						<input type="text" name="lastName" value={lastName} onChange={(e) => handleChange(e)} />
+					</div>
+					<div className="createEmployees__item">
+						<p>Company:</p>
+						<select
+							className="createEmployees__item"
+							name="companyId"
+							value={companyId}
+							onChange={(e) => handleChange(e)}
+						>
+							<option value="hidden" hidden>
+								Companies
+							</option>
+							{companies.map((company) => {
+								return (
+									<option key={company.id} value={company.id}>
+										{company.name}
+									</option>
+								);
+							})}
+						</select>
+					</div>
+					<div className="createEmployees__item">
 						<p>Email:</p>
 						<input type="text" name="email" value={email} onChange={(e) => handleChange(e)} />
 					</div>
-					<div className="createCompanies__item">
-						<p>Logo:</p>
-						<label>
-							<input
-								type="file"
-								hidden
-								accept="image/png, image/jpeg"
-								name="logo"
-								onChange={(e) => handleFile(e)}
-							/>
-							<div className="createCompanies__imgBox">
-								<img src="/images/upload.png" className="upload_img" alt="upload" />
-							</div>
-						</label>
-						<div>
-							<p className="image_path">{logo}</p>
-						</div>
-					</div>
-					<div className="createCompanies__item">
-						<p>Website:</p>
-						<input type="text" name="website" value={website} onChange={(e) => handleChange(e)} />
-					</div>
-					<div className="createCompanies__item createCompanies__send">
-						<div onClick={handleClick}>Create company</div>
-					</div>
+				</div>
+				<div className="createEmployees__item">
+					<p>Phone:</p>
+					<input type="text" name="phone" value={phone} onChange={(e) => handleChange(e)} />
+				</div>
+				<div className="createEmployees__item createEmployees__send">
+					<div onClick={handleClick}>Create employee</div>
 				</div>
 			</div>
 		</div>

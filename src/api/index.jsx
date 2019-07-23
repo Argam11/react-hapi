@@ -37,3 +37,18 @@ export function deleteOneCompany(id) {
 export function getAllEmployees() {
 	return axios.get(`${apiUrl}/employees`, config);
 }
+export function getOneEmployee(id) {
+	return axios.get(`${apiUrl}/employees/${id}`, config);
+}
+
+export function createEmployee(data) {
+	return axios.post(`${apiUrl}/employees`, data, config);
+}
+
+export function editEmployee(id, data) {
+	return axios.put(`${apiUrl}/employees/${id}`, data, config);
+}
+
+export function deleteEmployee(id) {
+	return axios.delete(`${apiUrl}/employees/${id}`, config);
+}

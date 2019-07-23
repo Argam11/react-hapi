@@ -7,7 +7,7 @@ export default function List({ employee, editEmployee, deleteEmployee }) {
 			<div className="employees__item">{employee.id}</div>
 			<div className="employees__item">{employee.firstName}</div>
 			<div className="employees__item">{employee.lastName}</div>
-			<div className="employees__item">{employee.companyId}</div>
+			<div className="employees__item">{employee.company.name}</div>
 			<div className="employees__item">{employee.email}</div>
 			<div className="employees__item">{employee.phone}</div>
 			<div className="employees__item employees__itemEdit">
